@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _laserFireRate = 0.5f;
     private float _laserCanFire = 0.0f;
+    [SerializeField]
+    private GameObject _laserContainer;
 
     [SerializeField]
     private int _hp = 3;
@@ -34,7 +36,7 @@ public class Player : MonoBehaviour
     {
         // Initial position
         transform.position = new Vector3(0, 0, 0);
-        
+
         //_spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _spawnManager = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>();
 
@@ -96,7 +98,8 @@ public class Player : MonoBehaviour
     void Shoot()
     {
         _laserCanFire = Time.time + _laserFireRate;
-        Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
+        GameObject newLaser = Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
+        newLaser.transform.parent = _laserContainer.transform;
     }
 
     public void DealDamage(int dmg = 1)
