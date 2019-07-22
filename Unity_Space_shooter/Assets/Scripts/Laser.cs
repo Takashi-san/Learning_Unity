@@ -19,6 +19,10 @@ public class Laser : MonoBehaviour
         _traveled += _speed * Time.deltaTime;
         if (_traveled > _range)
         {
+            if (transform.parent)
+            {
+                Destroy(transform.parent.gameObject);
+            }
             Destroy(gameObject);
         }
     }

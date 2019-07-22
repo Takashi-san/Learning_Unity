@@ -150,7 +150,7 @@ Transform:
   m_Children:
   - {fileID: 1123283307}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &209600379
 MonoBehaviour:
@@ -164,40 +164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809b1cd127865bf41bd353cdd58984aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnRate: 5
+  _enemySpawnRate: 2
+  _enemyContainer: {fileID: 1123283306}
   _enemyPrefab: {fileID: 2407735054752210788, guid: 68c61c2c771900c488a0bd6f1eeb7790,
     type: 3}
-  _enemyContainer: {fileID: 1123283306}
---- !u!1 &363077750
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 363077751}
-  m_Layer: 0
-  m_Name: Laser_Container
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &363077751
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 363077750}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  _tripleShotPUPrefab: {fileID: 2298621308325618757, guid: 75aa8e80821691645855c9b39fc4d2a6,
+    type: 3}
 --- !u!1 &616934884
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +264,7 @@ GameObject:
   - component: {fileID: 651892863}
   - component: {fileID: 651892862}
   m_Layer: 0
-  m_Name: SpaceBG_Overlay
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -445,7 +417,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 759478003}
   m_LocalRotation: {x: 0.31411174, y: -0.15183903, z: 0.09262949, w: 0.9325763}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: -19.54, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -518,7 +490,10 @@ MonoBehaviour:
     type: 3}
   _laserOffset: {x: 0, y: 1, z: 0}
   _laserFireRate: 0.25
-  _laserContainer: {fileID: 363077750}
+  _tripleShotFlag: 0
+  _tripleShotPrefab: {fileID: 3950241619870325885, guid: 3a4aaadb5af1dab4bb4346dfc73af427,
+    type: 3}
+  _tripleShotUpTime: 5
   _hp: 3
 --- !u!212 &1272314425
 SpriteRenderer:
@@ -580,7 +555,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1272314427
 BoxCollider2D:
@@ -606,5 +581,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.2338238, y: 4.15498}
+  m_Size: {x: 1.7290578, y: 4.15498}
   m_EdgeRadius: 0

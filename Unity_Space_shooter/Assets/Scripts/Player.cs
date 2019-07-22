@@ -25,7 +25,11 @@ public class Player : MonoBehaviour
     private float _laserFireRate = 0.5f;
     private float _laserCanFire = 0.0f;
     [SerializeField]
-    private GameObject _laserContainer;
+    private bool _tripleShotFlag = false;
+    [SerializeField]
+    private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private float _tripleShotUpTime = 5.0f;
 
     [SerializeField]
     private int _hp = 3;
@@ -97,9 +101,16 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
+        GameObject newShot;
+        if (_tripleShotFlag)
+        {
+            newShot = Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+        }
+        else 
+        {
+            newShot = Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
+        }
         _laserCanFire = Time.time + _laserFireRate;
-        GameObject newLaser = Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
-        newLaser.transform.parent = _laserContainer.transform;
     }
 
     public void DealDamage(int dmg = 1)
@@ -111,5 +122,18 @@ public class Player : MonoBehaviour
             _spawnManager.PlayerDied();
             Destroy(gameObject);
         }
+    }
+
+    public void TripleShotEnable()
+    {
+        _tripleShotFlag = true;
+        StopCoroutine("TripleShotPowerDown");
+        StartCoroutine("TripleShotPowerDown");
+    }
+
+    IEnumerator TripleShotPowerDown()
+    {
+        yield return new WaitForSeconds(_tripleShotUpTime);
+        _tripleShotFlag = false;
     }
 }
