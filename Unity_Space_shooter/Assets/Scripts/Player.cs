@@ -16,6 +16,15 @@ public class Player : MonoBehaviour
     private float _hLimit = 11.3f;
     private float _vLimit = 6.5f;
 
+    // Shooting variables
+    [SerializeField]
+    private GameObject _laserPrefab;
+    [SerializeField]
+    private Vector3 _laserOffset = new Vector3(0f, 0.8f, 0f);
+    [SerializeField]
+    private float _laserFireRate = 0.5f;
+    private float _laserCanFire = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +36,17 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
+        
+        if (Input.GetKey(KeyCode.Space)) 
+        {
+            if (Time.time > _laserCanFire)
+            {
+                Shoot();
+            }
+        }
     }
 
-    void Movement ()
+    void Movement()
     {
         // Check input info in Unity: edit >> project settings... >> Input
         float input_horizontal = Input.GetAxis("Horizontal");
@@ -62,5 +79,12 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, -_vLimit, transform.position.z);
         }
+    }
+
+    void Shoot()
+    {
+        _laserCanFire = Time.time + _laserFireRate;
+        Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
+        Debug.Log("Fire!!!");
     }
 }
