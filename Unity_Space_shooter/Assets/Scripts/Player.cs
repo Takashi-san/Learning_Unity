@@ -27,12 +27,20 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private int _hp = 3;
+    private SpawnManager _spawnManager;
 
     // Start is called before the first frame update
     void Start()
     {
         // Initial position
         transform.position = new Vector3(0, 0, 0);
+        //_spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        _spawnManager = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>();
+
+        if (!_spawnManager)
+        {
+            Debug.LogError("The Spawn Manager is NULL");
+        }
     }
 
     // Update is called once per frame
@@ -96,6 +104,7 @@ public class Player : MonoBehaviour
 
         if (_hp <= 0)
         {
+            _spawnManager.PlayerDied();
             Destroy(gameObject);
         }
     }
