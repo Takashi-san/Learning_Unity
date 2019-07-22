@@ -25,6 +25,9 @@ public class Player : MonoBehaviour
     private float _laserFireRate = 0.5f;
     private float _laserCanFire = 0.0f;
 
+    [SerializeField]
+    private int _hp = 3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -85,6 +88,15 @@ public class Player : MonoBehaviour
     {
         _laserCanFire = Time.time + _laserFireRate;
         Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
-        Debug.Log("Fire!!!");
+    }
+
+    public void DealDamage(int dmg = 1)
+    {
+        _hp -= dmg;
+
+        if (_hp <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
