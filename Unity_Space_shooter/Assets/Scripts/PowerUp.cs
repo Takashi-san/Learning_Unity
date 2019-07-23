@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TripleShotPU : MonoBehaviour
+public class PowerUp : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3.0f;
+    [SerializeField] // 0 = tripleshot; 1 = speed; 2 = shield.
+    private int _powerUpID = 0;
     private float _vLimit = 6.5f;
 
     void Update()
@@ -30,7 +32,24 @@ public class TripleShotPU : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if (player)
             {
-                player.TripleShotEnable();
+                switch(_powerUpID)
+                {
+                    case 0:
+                        player.TripleShotEnable();
+                    break;
+
+                    case 1:
+                        player.SpeedUpEnable();
+                    break;
+
+                    case 2:
+                        Debug.Log("shield powerup");
+                    break;
+
+                    default:
+                        Debug.LogError("Invalid powerup ID!");
+                    break;
+                }
             }
             Destroy(gameObject);
         }

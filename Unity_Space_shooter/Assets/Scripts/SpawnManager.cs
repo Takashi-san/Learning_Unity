@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyPrefab;
     [SerializeField]
-    private GameObject _tripleShotPUPrefab;
+    private GameObject[] _powerupPrefab;
     private bool _stopSpawning = false;
 
     private float _vLimit = 6.5f;
@@ -20,7 +20,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnEnemy());
-        StartCoroutine(SpawnTripleShotPU());
+        StartCoroutine(SpawnPowerup());
     }
 
     void Update()
@@ -38,12 +38,12 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnTripleShotPU()
+    IEnumerator SpawnPowerup()
     {
         while (!_stopSpawning)
         {
             yield return new WaitForSeconds(Random.Range(3, 8));
-            Instantiate(_tripleShotPUPrefab, new Vector3(Random.Range(-_hLimit, _hLimit), _vLimit, 0), Quaternion.identity);
+            Instantiate(_powerupPrefab[Random.Range(0, 2)], new Vector3(Random.Range(-_hLimit, _hLimit), _vLimit, 0), Quaternion.identity);
         }
     }
 

@@ -11,6 +11,11 @@ public class Player : MonoBehaviour
     // Speed variable
     [SerializeField]    // Permit manual adjustment using the Unity interface even when variable is private!
     private float _speed = 5.0f;
+    [SerializeField]
+    private float _speedUpBonus = 3.0f;
+    [SerializeField]
+    private float _speedUpUpTime = 5.0f;
+    private float _totalSpeedBonus = 0;
     
     // Boundaries variables
     private float _hLimit = 11.3f;
@@ -73,7 +78,7 @@ public class Player : MonoBehaviour
         // Translation
         //transform.Translate(Vector3.right * input_horizontal * _speed * Time.deltaTime);
         //transform.Translate(Vector3.up * input_vertical * _speed * Time.deltaTime);
-        transform.Translate(new Vector3(input_horizontal, input_vertical, 0) * _speed * Time.deltaTime);
+        transform.Translate(new Vector3(input_horizontal, input_vertical, 0) * (_speed + _totalSpeedBonus) * Time.deltaTime);
 
         // Simple player bounds
         //transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -_vLimit, _vLimit), transform.position.z);
@@ -131,9 +136,22 @@ public class Player : MonoBehaviour
         StartCoroutine("TripleShotPowerDown");
     }
 
+    public void SpeedUpEnable()
+    {
+        _totalSpeedBonus += _speedUpBonus;
+        StopCoroutine("SpeedReset");
+        StartCoroutine("SpeedReset");
+    }
+
     IEnumerator TripleShotPowerDown()
     {
         yield return new WaitForSeconds(_tripleShotUpTime);
         _tripleShotFlag = false;
+    }
+
+    IEnumerator SpeedReset()
+    {
+        yield return new WaitForSeconds(_speedUpUpTime);
+        _totalSpeedBonus = 0;
     }
 }
