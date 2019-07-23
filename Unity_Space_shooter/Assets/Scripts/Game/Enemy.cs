@@ -10,11 +10,13 @@ public class Enemy : MonoBehaviour
     private float _hLimit = 11.3f;
     [SerializeField]
     private float _randomRange = 1.0f;
+
+    private Player _player;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        _player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -51,6 +53,7 @@ public class Enemy : MonoBehaviour
         else if (other.tag.Equals("Laser"))
         {
             Destroy(other.gameObject);
+            _player.AddScore(10);
             Destroy(gameObject);
         }
     }

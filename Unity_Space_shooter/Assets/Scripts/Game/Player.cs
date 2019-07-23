@@ -39,10 +39,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _hp = 3;
     private SpawnManager _spawnManager;
+    [SerializeField]
+    private int _score;
     
     [SerializeField]
     private bool _shieldActive = false;
     private Transform _shieldTransform;
+
+    private UI_Manager _ui_manager;
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +56,6 @@ public class Player : MonoBehaviour
 
         //_spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _spawnManager = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>();
-
         if (!_spawnManager)
         {
             Debug.LogError("The Spawn Manager is NULL");
@@ -62,6 +65,13 @@ public class Player : MonoBehaviour
         if (!_shieldTransform)
         {
             Debug.LogError("Player_Shield is NULL");
+        }
+        _shieldTransform.gameObject.SetActive(false);
+
+        _ui_manager = GameObject.Find("Canvas").GetComponent<UI_Manager>();
+        if (!_ui_manager)
+        {
+            Debug.LogError("UI_Manager is NULL");
         }
     }
 
@@ -138,9 +148,11 @@ public class Player : MonoBehaviour
         }
         
         _hp -= dmg;
+        _ui_manager.UpdateHP(_hp);
         if (_hp <= 0)
         {
             _spawnManager.PlayerDied();
+            _ui_manager.GameOver();
             Destroy(gameObject);
         }
     }
@@ -175,5 +187,11 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(_speedUpUpTime);
         _totalSpeedBonus = 0;
+    }
+
+    public void AddScore(int score)
+    {
+        _score += score;
+        _ui_manager.UpdateScore(_score);
     }
 }
