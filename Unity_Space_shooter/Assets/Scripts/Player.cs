@@ -39,6 +39,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _hp = 3;
     private SpawnManager _spawnManager;
+    
+    [SerializeField]
+    private bool _shieldActive = false;
+    private Transform _shieldTransform;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +56,12 @@ public class Player : MonoBehaviour
         if (!_spawnManager)
         {
             Debug.LogError("The Spawn Manager is NULL");
+        }
+
+        _shieldTransform = transform.Find("Player_Shield");
+        if (!_shieldTransform)
+        {
+            Debug.LogError("Player_Shield is NULL");
         }
     }
 
@@ -120,8 +130,14 @@ public class Player : MonoBehaviour
 
     public void DealDamage(int dmg = 1)
     {
+        if (_shieldActive)
+        {
+            _shieldActive = false;
+            _shieldTransform.gameObject.SetActive(false);
+            return;
+        }
+        
         _hp -= dmg;
-
         if (_hp <= 0)
         {
             _spawnManager.PlayerDied();
@@ -141,6 +157,12 @@ public class Player : MonoBehaviour
         _totalSpeedBonus += _speedUpBonus;
         StopCoroutine("SpeedReset");
         StartCoroutine("SpeedReset");
+    }
+
+    public void ShieldActivate()
+    {
+        _shieldActive = true;
+        _shieldTransform.gameObject.SetActive(true);
     }
 
     IEnumerator TripleShotPowerDown()
